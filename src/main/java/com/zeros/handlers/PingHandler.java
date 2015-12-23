@@ -1,17 +1,16 @@
 package com.zeros.handlers;
 
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.stereotype.Controller;
 
 /**
  * Created by zeroual on 23/12/2015.
  */
-public class PingHandler extends TextWebSocketHandler {
+@Controller
+public class PingHandler {
 
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        System.out.println("Message received :" + message);
-        session.sendMessage(new TextMessage("Pong !"));
+    @MessageMapping("/ping")
+    public void handlePing(String ping){
+        System.out.println("Ping Received:"+ping);
     }
 }
