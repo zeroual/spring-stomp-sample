@@ -16,6 +16,6 @@ public class SockJsConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(new PingHandler(), "/websocket/ping");
+        webSocketHandlerRegistry.addHandler(new PingHandler(), "/websocket/ping").withSockJS();
     }
 }

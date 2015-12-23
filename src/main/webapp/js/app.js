@@ -1,4 +1,6 @@
-var socket = new WebSocket("ws://" + window.location.host + "/websocket/ping");
+//var socket = new WebSocket("ws://" + window.location.host + "/websocket/ping");
+var socket = new SockJS("http://" + window.location.host + "/websocket/ping");
+
 
 function ping() {
     socket.send("Ping !");
