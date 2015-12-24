@@ -1,19 +1,27 @@
-//var socket = new WebSocket("ws://" + window.location.host + "/websocket/ping");
-var socket = new SockJS("http://" + window.location.host + "/websocket/ping");
+angular.module('zerosApp', [])
+    .controller('ChatCtrl', function (CharService, $scope) {
 
+        $scope.messagesList = [{body: 'hi'}];
+        $scope.$on('receivedMessageEvent', function (event, message) {
+            $scope.messagesList.push(message);
+            $scope.$apply();
+        });
 
-function ping() {
-    socket.send("Ping !");
-}
-socket.onopen = function () {
-    console.log('opening connexion');
-    ping();
-};
+        $scope.sendMessage = function () {
+            CharService.sendMessage($scope.message);
+            $scope.message = '';
+        };
 
-socket.onclose = function () {
-    console.log('closing connexion');
-};
-socket.onmessage = function (message) {
-    console.log('message received' + message.data);
-    ping();
-};
+    })
+    .service('CharService', function ($rootScope) {
+        var socket = new SockJS("http://" + window.location.host + "/stomp");
+        var stomp = Stomp.over(socket);
+        stomp.connect('guest', 'guest', function () {
+            stomp.subscribe("/topic/chat", function (payload) {
+                $rootScope.$broadcast('receivedMessageEvent', JSON.parse(payload.body));
+            });
+        });
+        this.sendMessage = function (message) {
+            stomp.send("/app/chat", {}, JSON.stringify({body: message}));
+        };
+    });

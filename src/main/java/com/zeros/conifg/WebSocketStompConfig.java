@@ -23,7 +23,7 @@ public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigur
 //        This path is distinct from any destination path that you might
 //        send or receive messages from. It’s the endpoint that a client would connect to before
 //        subscribing to or publishing to a destination path.
-        stompEndpointRegistry.addEndpoint("/websocket/ping").withSockJS();
+        stompEndpointRegistry.addEndpoint("/stomp").withSockJS();
     }
 
 //    This method is optional. If you don’t override

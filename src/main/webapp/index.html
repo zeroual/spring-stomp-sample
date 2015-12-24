@@ -21,6 +21,7 @@
             padding: 40px 15px;
             text-align: center;
         }
+        .top-buffer { margin-top:20px; }
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,7 +31,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body ng-app="zerosApp">
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -51,12 +52,27 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" ng-controller="ChatCtrl">
 
     <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
-            mostly barebones HTML document.</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="new message ..."  ng-model="message">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button"  ng-click="sendMessage()">Send</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row top-buffer">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="message in messagesList track  by $index"> {{message.body}}</li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
 </div><!-- /.container -->
@@ -68,6 +84,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!--please verify if the cdn is always up-->
 <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="js/app.js"></script>
+</bodyng-app>
 </body>
 </html>
